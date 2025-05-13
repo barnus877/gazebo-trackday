@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <model name="track">
+    <link name="link">
+      <collision name="collision">
+        <geometry>
+			<mesh>
+			  <scale>1 1 1</scale>
+			  <uri>moldel://racetrack/meshes/track.stl</uri>
+			</mesh>
+		</geometry>
+		<surface>
+				<friction>
+					<ode>
+					  <mu>1</mu>
+					  <mu2>1</mu2>
+					</ode>
+				</friction>
+			</surface>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+		    <scale>1 1 1</scale>
+            <uri>moldel://racetrack/meshes/track.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>

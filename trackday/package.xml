@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>homework</name>
+  <name>trackday</name>
   <version>1.0.0</version>
   <description>
-    Basics of Gazebo Harmonic with ROS Jazzy for BME MOGI ROS2 course
+    Ackermann robot hitting the track for some laps
   </description>
   <maintainer email="barnus877@gmail.com">Szabo Barnabas</maintainer>
   <license>Apache 2.0</license>

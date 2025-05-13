@@ -9,16 +9,16 @@ from launch.substitutions import  LaunchConfiguration, PathJoinSubstitution, Tex
 def generate_launch_description():
 
     world_arg = DeclareLaunchArgument(
-        'world', default_value='world.sdf',
+        'trackworld', default_value='trackworld.sdf',
         description='Name of the Gazebo world file to load'
     )
 
-    pkg_bme_gazebo_basics = get_package_share_directory('bme_gazebo_basics')
+    pkg_trackday = get_package_share_directory('trackday')
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
 
     # Add your own gazebo library path here
-    gazebo_models_path = "/home/tux/gazebo_models"
-    os.environ["GZ_SIM_RESOURCE_PATH"] += os.pathsep + gazebo_models_path
+    gazebo_models_path = os.path.join(pkg_trackday, 'gazebo_models')
+    os.environ["GZ_SIM_RESOURCE_PATH"] = os.environ.get("GZ_SIM_RESOURCE_PATH", "") + os.pathsep + gazebo_models_path
 
 
     gazebo_launch = IncludeLaunchDescription(
@@ -26,9 +26,9 @@ def generate_launch_description():
             os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py'),
         ),
         launch_arguments={'gz_args': [PathJoinSubstitution([
-            pkg_bme_gazebo_basics,
+            pkg_trackday,
             'worlds',
-            LaunchConfiguration('world')
+            LaunchConfiguration('trackworld')
         ]),
         TextSubstitution(text=' -r -v -v1 --render-engine ogre --render-engine-gui-api-backend opengl')],
         #TextSubstitution(text=' -r -v -v1')],
