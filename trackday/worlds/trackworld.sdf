@@ -73,7 +73,7 @@
       <self_collide>false</self_collide>
     </model>
     <include>
-      <uri>file:///home/tux/ros2_ws/install/trackday/share/trackday/gazebo_models/racetrack</uri>
+      <uri>model://racetrack</uri>
       <name>track</name>
       <pose>11.123247070181106 6.7781278363181094 0.010389175585824213 4.695157138474266e-05 0.00029643042922795307 -9.0847347102408018e-09</pose>
     </include>
