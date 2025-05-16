@@ -1,0 +1,273 @@
+<?xml version='1.0'?>
+
+<robot name="racecar" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <!-- STEP 5 - Gazebo plugin -->
+  <xacro:include filename="racecar.gazebo" />
+  
+  <!-- STEP 1 - Robot footprint -->
+  <link name="base_footprint"></link>
+
+  <!-- STEP 2 - Robot chassis = base_link -->
+  <joint name="base_footprint_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="base_footprint"/>
+    <child link="base_link" />
+  </joint>
+
+  <link name='base_link'>
+    <pose>0 0 0.1 0 0 0</pose>
+
+    <inertial>
+      <mass value="15.0"/>
+      <origin xyz="0.0 0 0" rpy=" 0 0 0"/>
+      <inertia
+          ixx="0.0625" ixy="0" ixz="0"
+          iyy="0.2125" iyz="0"
+          izz="0.25"
+      />
+    </inertial>
+
+    <collision name='collision'>
+      <origin xyz="0 0 0" rpy=" 0 0 0"/> 
+      <geometry>
+        <mesh filename = "package://trackday/meshes/car.stl"/>
+      </geometry>
+    </collision>
+
+    <visual name='base_link_visual'>
+      <origin xyz="0 0 0" rpy=" 0 0 0"/>
+      <geometry>
+        <mesh filename = "package://trackday/meshes/car.dae"/>
+      </geometry>
+    </visual>
+
+  </link>
+
+  <!-- STEP 3 - Wheels -->
+  <!-- Front left steering joint -->
+  <joint name="front_left_steering_joint" type="revolute">
+    <origin xyz="1.5 -1.8 -0.7" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="front_left_steering_link"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.6" upper="0.6" effort="50" velocity="1.0"/>
+  </joint>
+
+  <!-- Front left steering link (acts like a knuckle) -->
+  <link name="front_left_steering_link">
+    <inertial>
+      <mass value="0.5"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia
+      ixx="0.01" ixy="0.0" ixz="0.0"
+      iyy="0.01" iyz="0.0"
+      izz="0.01"/>
+    </inertial>
+  </link>
+
+  <!-- Front left wheel joint (spins the wheel) -->
+  <joint name="front_left_wheel_joint" type="continuous">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="front_left_steering_link"/>
+    <child link="front_left_wheel"/>
+    <axis xyz="1 0 0"/>
+  </joint>
+
+  <link name='front_left_wheel'>
+    <inertial>
+      <mass value="5.0"/>
+      <origin xyz="0 0 0" rpy="0 1.5707 0"/>
+      <inertia
+          ixx="0.014" ixy="0" ixz="0"
+          iyy="0.014" iyz="0"
+          izz="0.025"
+      />
+    </inertial>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 1.5707 0"/> 
+      <geometry>
+        <cylinder radius="0.72" length=".5"/>
+      </geometry>
+    </collision>
+
+    <visual name='front_left_wheel_visual'>
+      <origin xyz="0 0 0" rpy="0 1.5707 0"/>
+      <geometry>
+        <mesh filename = "package://trackday/meshes/rim.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint type="continuous" name="rear_left_wheel_joint">
+    <origin xyz="1.5 3.1 -0.7" rpy="0 0 0"/>
+    <child link="rear_left_wheel"/>
+    <parent link="base_link"/>
+    <axis xyz="1 0 0" rpy="0 0 0"/>
+    <limit effort="100" velocity="10"/>
+    <dynamics damping="1.0" friction="1.0"/>
+  </joint>
+
+  <link name='rear_left_wheel'>
+    <inertial>
+      <mass value="5.0"/>
+      <origin xyz="0 0 0" rpy="0 1.5707 0"/>
+      <inertia
+          ixx="0.014" ixy="0" ixz="0"
+          iyy="0.014" iyz="0"
+          izz="0.025"
+      />
+    </inertial>
+
+   <collision>
+      <origin xyz="0 0 0" rpy="0 1.5707 0"/> 
+      <geometry>
+        <cylinder radius="0.72" length=".5"/>
+      </geometry>
+    </collision>
+
+    <visual name='rear_left_wheel_visual'>
+      <origin xyz="0 0 0" rpy="0 1.5707 0"/>
+      <geometry>
+        <mesh filename = "package://trackday/meshes/rim.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- Front right steering joint -->
+  <joint name="front_right_steering_joint" type="revolute">
+    <origin xyz="-1.5 -1.8 -0.7" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="front_right_steering_link"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.6" upper="0.6" effort="50" velocity="1.0"/>
+  </joint>
+
+  <!-- Front right steering link -->
+  <link name="front_right_steering_link">
+    <inertial>
+      <mass value="0.5"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia
+      ixx="0.01" ixy="0.0" ixz="0.0"
+      iyy="0.01" iyz="0.0"
+      izz="0.01"/>
+    </inertial>
+  </link>
+
+  <!-- Front right wheel joint -->
+  <joint name="front_right_wheel_joint" type="continuous">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="front_right_steering_link"/>
+    <child link="front_right_wheel"/>
+    <axis xyz="1 0 0"/>
+ </joint>
+
+  <link name='front_right_wheel'>
+    <inertial>
+      <mass value="5.0"/>
+      <origin xyz="0 0 0" rpy="0 -1.5707 0"/>
+      <inertia
+          ixx="0.014" ixy="0" ixz="0"
+          iyy="0.014" iyz="0"
+          izz="0.025"
+      />
+    </inertial>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 -1.5707 0"/> 
+      <geometry>
+        <cylinder radius="0.72" length=".5"/>
+      </geometry>
+    </collision>
+
+    <visual name='front_right_wheel_visual'>
+      <origin xyz="0 0 0" rpy="0 -1.5707 0"/>
+      <geometry>
+        <mesh filename = "package://trackday/meshes/rim.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint type="continuous" name="rear_right_wheel_joint">
+    <origin xyz="-1.5 3.1 -0.7" rpy="0 0 0"/>
+    <child link="rear_right_wheel"/>
+    <parent link="base_link"/>
+    <axis xyz="1 0 0" rpy="0 0 0"/>
+    <limit effort="100" velocity="10"/>
+    <dynamics damping="1.0" friction="1.0"/>
+  </joint>
+
+  <link name='rear_right_wheel'>
+    <inertial>
+      <mass value="5.0"/>
+      <origin xyz="0 0 0" rpy="0 -1.5707 0"/>
+      <inertia
+          ixx="0.014" ixy="0" ixz="0"
+          iyy="0.014" iyz="0"
+          izz="0.025"
+      />
+    </inertial>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 -1.5707 0"/> 
+      <geometry>
+        <cylinder radius="0.72" length=".5"/>
+      </geometry>
+    </collision>
+
+    <visual name='rear_right_wheel_visual'>
+      <origin xyz="0 0 0" rpy="0 -1.5707 0"/>
+      <geometry>
+        <mesh filename = "package://trackday/meshes/rim.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- STEP 6 - Gazebo frictions and colors -->
+  <gazebo reference="front_left_wheel">
+    <mu1>1.5</mu1>
+    <mu2>0.7</mu2>
+    <kp>200000.0</kp>
+    <kd>5000.0</kd>
+    <minDepth>0.002</minDepth>
+    <maxVel>0.3</maxVel>
+    <fdir1>0 1 0</fdir1>
+  </gazebo>
+
+  <gazebo reference="front_right_wheel">
+    <mu1>1.5</mu1>
+    <mu2>0.7</mu2>
+    <kp>200000.0</kp>
+    <kd>5000.0</kd>
+    <minDepth>0.002</minDepth>
+    <maxVel>0.3</maxVel>
+    <fdir1>0 1 0</fdir1>
+  </gazebo>
+
+  <gazebo reference="rear_left_wheel">
+    <mu1>1.5</mu1>
+    <mu2>0.7</mu2>
+    <kp>200000.0</kp>
+    <kd>5000.0</kd>
+    <minDepth>0.002</minDepth>
+    <maxVel>0.3</maxVel>
+    <fdir1>0 1 0</fdir1>
+  </gazebo>
+
+  <gazebo reference="rear_right_wheel">
+    <mu1>1.5</mu1>
+    <mu2>0.7</mu2>
+    <kp>200000.0</kp>
+    <kd>5000.0</kd>
+    <minDepth>0.002</minDepth>
+    <maxVel>0.3</maxVel>
+    <fdir1>0 1 0</fdir1>
+  </gazebo>
+
+  <gazebo reference="base_link">
+    <mu1>0.000002</mu1>
+    <mu2>0.000002</mu2>
+  </gazebo>
+
+</robot>
