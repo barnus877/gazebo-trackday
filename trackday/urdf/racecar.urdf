@@ -50,7 +50,7 @@
     <parent link="base_link"/>
     <child link="front_left_steering_link"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.6" upper="0.6" effort="50" velocity="1.0"/>
+    <limit lower="-0.6" upper="0.6" effort="50" velocity="10"/>
   </joint>
 
   <!-- Front left steering link (acts like a knuckle) -->
@@ -140,7 +140,7 @@
     <parent link="base_link"/>
     <child link="front_right_steering_link"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.6" upper="0.6" effort="50" velocity="1.0"/>
+    <limit lower="-0.6" upper="0.6" effort="50" velocity="10"/>
   </joint>
 
   <!-- Front right steering link -->
