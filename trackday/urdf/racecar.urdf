@@ -87,7 +87,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 1.5707 0"/> 
       <geometry>
-        <mesh filename = "package://trackday/meshes/rim.dae" scale="0.1 0.1 0.1"/>
+        <cylinder radius="0.072" length=".05"/>
       </geometry>
     </collision>
 
@@ -122,7 +122,7 @@
    <collision>
       <origin xyz="0 0 0" rpy="0 1.5707 0"/> 
       <geometry>
-        <mesh filename = "package://trackday/meshes/rim.dae" scale="0.1 0.1 0.1"/>
+        <cylinder radius="0.072" length=".05"/>
       </geometry>
     </collision>
 
@@ -177,7 +177,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 -1.5707 0"/> 
       <geometry>
-        <mesh filename = "package://trackday/meshes/rim.dae" scale="0.1 0.1 0.1"/>
+        <cylinder radius="0.072" length=".05"/>
       </geometry>
     </collision>
 
@@ -212,7 +212,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 -1.5707 0"/> 
       <geometry>
-        <mesh filename = "package://trackday/meshes/rim.dae" scale="0.1 0.1 0.1"/>
+        <cylinder radius="0.072" length=".05"/>
       </geometry>
     </collision>
 
