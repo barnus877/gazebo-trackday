@@ -10,21 +10,21 @@
 
 
 	
-	<left_joint>rear_left_wheel_joint</left_joint>
-	<right_joint>rear_right_wheel_joint</right_joint>
+        <left_joint>rear_left_wheel_joint</left_joint>
+        <right_joint>rear_right_wheel_joint</right_joint>
 
 
-	<left_steering_joint>front_left_steering_joint</left_steering_joint>
-	<right_steering_joint>front_right_steering_joint</right_steering_joint>
+        <left_steering_joint>front_left_steering_joint</left_steering_joint>
+        <right_steering_joint>front_right_steering_joint</right_steering_joint>
 
-	<wheel_separation>3</wheel_separation>
-	<kingpin_width>2.5</kingpin_width>
-	<wheel_base>4.9</wheel_base>
-	<steering_limit>0.6</steering_limit>
-	<wheel_radius>0.72</wheel_radius>
+        <wheel_separation>0.3</wheel_separation>
+        <kingpin_width>0.25</kingpin_width>
+        <wheel_base>0.49</wheel_base>
+        <steering_limit>0.6</steering_limit>
+        <wheel_radius>0.072</wheel_radius>
 
-	<min_velocity>0</min_velocity>
-	<max_velocity>10</max_velocity>
+        <min_velocity>0</min_velocity>
+        <max_velocity>10</max_velocity>
 
         <!-- Odometry -->
         <odom_topic>odom</odom_topic> 
@@ -40,10 +40,39 @@
         <topic>joint_states</topic>
         <joint_name>front_left_steering_joint</joint_name>
         <joint_name>front_right_steering_joint</joint_name>
-	<joint_name>front_left_wheel_joint</joint_name>
+	      <joint_name>front_left_wheel_joint</joint_name>
         <joint_name>front_right_wheel_joint</joint_name>
         <joint_name>rear_left_wheel_joint</joint_name>
         <joint_name>rear_right_wheel_joint</joint_name>
     </plugin>
   </gazebo>
+  <!--
+   <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>racecar</robotNamespace>
+        </plugin>
+
+        <plugin name="four_diff_controller" filename="libgazebo_ros_ackerman.so">
+            <updateRate>100.0</updateRate>
+            <robotNamespace>racecar</robotNamespace>
+            <leftFrontJoint>front_left_wheel_joint</leftFrontJoint>
+            <rightFrontJoint>front_right_wheel_joint</rightFrontJoint>
+            <leftRearJoint>rear_left_wheel_joint</leftRearJoint>
+            <rightRearJoint>rear_right_wheel_joint</rightRearJoint>
+            <leftHingeJoint>front_left_steering_joint</leftHingeJoint>
+            <rightHingeJoint>front_left_steering_joint</rightHingeJoint>
+            <wheelSeparation>0.3</wheelSeparation>
+            <wheelDiameter>0.144</wheelDiameter>
+            <robotBaseFrame>base_footprint</robotBaseFrame>
+            <commandTopic>cmd_vel</commandTopic>
+            <torque>50</torque>
+            <broadcastTF>true</broadcastTF>
+            <odometryTopic>odom</odometryTopic>
+            <odometryFrame>odom</odometryFrame>
+            <covariance_x>0.000100</covariance_x>
+            <covariance_y>0.000100</covariance_y>
+            <covariance_yaw>0.010000</covariance_yaw>
+        </plugin>
+    </gazebo>
+  -->
 </robot>
