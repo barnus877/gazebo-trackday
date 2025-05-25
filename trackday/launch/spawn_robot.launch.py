@@ -29,6 +29,7 @@ def generate_launch_description():
         description='Name of the URDF description to load'
     )
 
+
     # Define the path to your URDF or Xacro file
     urdf_file_path = PathJoinSubstitution([
         pkg_trackday,  # Replace with your package name
@@ -101,9 +102,38 @@ def generate_launch_description():
             "/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist",
             "/odom@nav_msgs/msg/Odometry@gz.msgs.Odometry",
             "/joint_states@sensor_msgs/msg/JointState@gz.msgs.Model",
-            "/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V"
+            "/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V",
+            #"/camera/image@sensor_msgs/msg/Image@gz.msgs.Image",
+            "/camera/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo",
         ],
         output="screen",
+        parameters=[
+            {'use_sim_time': True},
+        ]
+    )
+
+
+    # Node to bridge camera image with image_transport and compressed_image_transport
+    gz_image_bridge_node = Node(
+        package="ros_gz_image",
+        executable="image_bridge",
+        arguments=[
+            "/camera/image",
+        ],
+        output="screen",
+        parameters=[
+            {'use_sim_time': True,
+             'camera.image.compressed.jpeg_quality': 75},
+        ],
+    )
+
+    # Relay node to republish /camera/camera_info to /camera/image/camera_info
+    relay_camera_info_node = Node(
+        package='topic_tools',
+        executable='relay',
+        name='relay_camera_info',
+        output='screen',
+        arguments=['camera/camera_info', 'camera/image/camera_info'],
         parameters=[
             {'use_sim_time': True},
         ]
@@ -120,6 +150,8 @@ def generate_launch_description():
     launchDescriptionObject.add_action(robot_state_publisher_node)
 #    launchDescriptionObject.add_action(joint_state_publisher_gui_node)
     launchDescriptionObject.add_action(gz_bridge_node)
+    launchDescriptionObject.add_action(gz_image_bridge_node)
+    launchDescriptionObject.add_action(relay_camera_info_node)
 
 
     return launchDescriptionObject
