@@ -30,7 +30,7 @@
     <collision name='collision'>
       <origin xyz="0 0 0" rpy=" 0 0 0"/> 
       <geometry>
-        <mesh filename = "package://trackday/meshes/car.stl" scale="0.1 0.1 0.1"/>
+        <mesh filename = "package://trackday/meshes/car.dae" scale="0.1 0.1 0.1"/>
       </geometry>
     </collision>
 
@@ -51,7 +51,7 @@
     <parent link="base_link"/>
     <child link="front_left_steering_link"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.6" upper="0.6" effort="1000" velocity="10"/>
+    <limit lower="-0.6" upper="0.6" effort="100000" velocity="10"/>
   </joint>
 
   <!-- Front left steering link (acts like a knuckle) -->
@@ -143,7 +143,7 @@
     <parent link="base_link"/>
     <child link="front_right_steering_link"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-0.6" upper="0.6" effort="1000" velocity="10"/>
+    <limit lower="-0.6" upper="0.6" effort="100000" velocity="10"/>
   </joint>
 
   <!-- Front right steering link -->
@@ -241,7 +241,7 @@
 
   <!-- STEP 7 - Camera -->
   <joint type="fixed" name="camera_joint">
-    <origin xyz="-0.015 0 0.2" rpy="0 0 0"/>
+    <origin xyz="0.32 0 0.1" rpy="0 0.414 0"/>
     <child link="camera_link"/>
     <parent link="base_link"/>
     <axis xyz="0 1 0" />

@@ -76,70 +76,80 @@ class ImageSubscriber(Node):
         self.running = False
 
     def process_image(self, img):
-        """Image processing task."""
         msg = Twist()
-        msg.linear.x = 0.0
-        msg.linear.y = 0.0
-        msg.linear.z = 0.0
-        msg.angular.x = 0.0
-        msg.angular.y = 0.0
+        msg.linear.x = 1
         msg.angular.z = 0.0
 
-        rows,cols = img.shape[:2]
+        #img=img[330:480,:]
 
-        R,G,B = self.convert2rgb(img)
+        rows, cols = img.shape[:2]
 
-        redMask = self.threshold_binary(R, (220, 255))
-        stackedMask = np.dstack((redMask, redMask, redMask))
+        # Convert to HSV and threshold white
+        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+        lower_white = np.array([0, 0, 200])
+        upper_white = np.array([180, 40, 255])
+        white_mask = cv2.inRange(hsv, lower_white, upper_white)
+
+        stackedMask = cv2.cvtColor(white_mask, cv2.COLOR_GRAY2BGR)
         contourMask = stackedMask.copy()
         crosshairMask = stackedMask.copy()
 
-        # return value of findContours depends on OpenCV version
-        (contours, hierarchy) = cv2.findContours(redMask.copy(), 1, cv2.CHAIN_APPROX_NONE)
+        contours, _ = cv2.findContours(white_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-        # Find the biggest contour (if detected)
-        if len(contours) > 0:
-            
-            c = max(contours, key=cv2.contourArea)
+        # Split left and right line based on image center
+        left_centroids = []
+        right_centroids = []
+        for c in contours:
             M = cv2.moments(c)
-
-            # Make sure that "m00" won't cause ZeroDivisionError: float division by zero
-            if M["m00"] != 0:
-                cx = int(M["m10"] / M["m00"])
-                cy = int(M["m01"] / M["m00"])
+            if M["m00"] == 0:
+                continue
+            cx = int(M["m10"] / M["m00"])
+            cy = int(M["m01"] / M["m00"])
+            if cx < cols // 2:
+                left_centroids.append((cx, cy))
             else:
-                cx, cy = 0, 0
+                right_centroids.append((cx, cy))
 
-            # Show contour and centroid
-            cv2.drawContours(contourMask, contours, -1, (0,255,0), 10)
-            cv2.circle(contourMask, (cx, cy), 5, (0, 255, 0), -1)
+        def average_centroid(points):
+            if not points:
+                return None
+            x = int(np.mean([pt[0] for pt in points]))
+            y = int(np.mean([pt[1] for pt in points]))
+            return (x, y)
 
-            # Show crosshair and difference from middle point
-            cv2.line(crosshairMask,(cx,0),(cx,rows),(0,0,255),10)
-            cv2.line(crosshairMask,(0,cy),(cols,cy),(0,0,255),10)
-            cv2.line(crosshairMask,(int(cols/2),0),(int(cols/2),rows),(255,0,0),10)
+        left_center = average_centroid(left_centroids)
+        right_center = average_centroid(right_centroids)
 
-            # Chase the ball
-            if abs(cols/2 - cx) > 20:
-                msg.linear.x = 0.0
-                if cols/2 > cx:
-                    msg.angular.z = 0.2
-                else:
-                    msg.angular.z = -0.2
+        # Draw centroids
+        if left_center:
+            cv2.circle(contourMask, left_center, 5, (0, 255, 0), -1)
+        if right_center:
+            cv2.circle(contourMask, right_center, 5, (255, 0, 0), -1)
 
-            else:
-                msg.linear.x = 0.2
-                msg.angular.z = 0.0
-
+        # Compute target point
+        if left_center and right_center:
+            target_x = (left_center[0] + right_center[0]) // 2
+        elif left_center:
+            target_x = left_center[0] + 300  # bias right
+        elif right_center:
+            target_x = right_center[0] - 300  # bias left
         else:
-            msg.linear.x = 0.0
-            msg.angular.z = 0.0
+            target_x = cols // 2  # fallback to straight
 
-        # Publish cmd_vel
+        # Draw navigation lines
+        cv2.line(crosshairMask, (target_x, 0), (target_x, rows), (0, 0, 255), 2)
+        cv2.line(crosshairMask, (cols//2, 0), (cols//2, rows), (255, 0, 0), 2)
+
+        # Compute angular velocity
+        offset = cols//2 - target_x
+        msg.angular.z = float(offset)*float(0.02)
+        msg.linear.x = 1
+        msg.linear.x = float(msg.linear.x)
+        msg.angular.z = float(msg.angular.z)
+
         self.publisher.publish(msg)
 
-        # Return processed frames
-        return redMask, contourMask, crosshairMask
+        return white_mask, contourMask, crosshairMask
 
     # Convert to RGB channels
     def convert2rgb(self, img):

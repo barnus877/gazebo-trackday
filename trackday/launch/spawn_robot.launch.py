@@ -145,7 +145,7 @@ def generate_launch_description():
     launchDescriptionObject.add_action(world_arg)
     launchDescriptionObject.add_action(model_arg)
     launchDescriptionObject.add_action(world_launch)
-    launchDescriptionObject.add_action(rviz_node)
+    #launchDescriptionObject.add_action(rviz_node)
     launchDescriptionObject.add_action(spawn_urdf_node)
     launchDescriptionObject.add_action(robot_state_publisher_node)
 #    launchDescriptionObject.add_action(joint_state_publisher_gui_node)

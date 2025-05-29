@@ -41,19 +41,7 @@
             <contact/>
           </surface>
         </collision>
-        <visual name='visual'>
-          <geometry>
-            <plane>
-              <normal>0 0 1</normal>
-              <size>100 100</size>
-            </plane>
-          </geometry>
-          <material>
-            <ambient>0.800000012 0.800000012 0.800000012 1</ambient>
-            <diffuse>0.800000012 0.800000012 0.800000012 1</diffuse>
-            <specular>0.800000012 0.800000012 0.800000012 1</specular>
-          </material>
-        </visual>
+
         <pose>0 0 0 0 0 0</pose>
         <inertial>
           <pose>0 0 0 0 0 0</pose>
