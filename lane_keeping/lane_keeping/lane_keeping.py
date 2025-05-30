@@ -122,9 +122,9 @@ class ImageSubscriber(Node):
 
         # Draw centroids
         if left_center:
-            cv2.circle(contourMask, left_center, 5, (0, 255, 0), -1)
+            cv2.circle(contourMask, left_center, 10, (0, 255, 0), -1)
         if right_center:
-            cv2.circle(contourMask, right_center, 5, (255, 0, 0), -1)
+            cv2.circle(contourMask, right_center, 10, (255, 0, 0), -1)
 
         # Compute target point
         if left_center and right_center:

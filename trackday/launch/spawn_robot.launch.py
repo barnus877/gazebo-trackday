@@ -64,7 +64,7 @@ def generate_launch_description():
         arguments=[
             "-name", "racecar",
             "-topic", "robot_description",
-            "-x", "0.0", "-y", "10.3", "-z", "1.5", "-Y", "0.0"  # Initial spawn position
+            "-x", "0.0", "-y", "10.3", "-z", "1.5", "-Y", "0.4" , # Initial spawn position
         ],
         output="screen",
         parameters=[
