@@ -13,7 +13,7 @@
   - [Launch](#launch)
 
 ## Project Descripton ##
-This is a ROS2 project for the [*Robotic Systems Laboratory*](https://oktatas.gpk.bme.hu/tad/en/tantargy/BMEGEMINMRL) course of the Mechatronics Engineering MSc of the Budapest University of Technology and Economics created by [Máté Horváth](https://github.com/horvmate02) and [Barnabás Szabó](https://github.com/barnus877]).
+This is a ROS2 project for the [*Robotic Systems Laboratory*](https://oktatas.gpk.bme.hu/tad/en/tantargy/BMEGEMINMRL) course of the Mechatronics Engineering MSc of the Budapest University of Technology and Economics created by [Máté Horváth](https://github.com/horvmate02) and [Barnabás Szabó](https://github.com/barnus877).
 
 The task is to simulate a racecar with Ackermann-steering in gazebo, which drives around a racetrack autonomously. 
 
@@ -52,8 +52,15 @@ The task is to simulate a racecar with Ackermann-steering in gazebo, which drive
 All of the models are created with [Blender](https://www.blender.org/). The required models are already contained in this package. If there is any error present check the path to the models.
 ### Racetrack ###
 The racetrack represents a fictional layout. It has a wall on each side so the robot can't escape the track, even in case of malfunctions. The track also featrues two white lines. These are marking the edge of the rack and provide a visual aid for the autonoumos driving.
+![racetrack](assets/track-blender.png)
 ### Racecar ###
-The racecar is a basic low-poly model. There are two separate parts which are the wheel and the car's chassis. These parts are assembled in the URDF file, where each of the wheel joints are described by a 3D coordinate loacation. Inertial and dimensional parameters can be also found here. The car also includes a camera on its bonnet, which is also described in the URDF file.
+The racecar is a basic low-poly model. There are two separate parts which are the wheel and the car's chassis.
+![chassis](assets/car-blender.png)
+![wheel](assets/rim-blender.png)
+These parts are assembled in the URDF file, where each of the wheel joints are described by a 3D coordinate loacation. Inertial and dimensional parameters can be also found here. The car also includes a camera on its bonnet, which is also described in the URDF file. The camera is visualised by a red box.
+![the car in gazebo](assets/car-gazebo.png)
+
+
 
 The following figure depicts the structure of the racecar model using the [rqt_tf_tree](https://wiki.ros.org/rqt_tf_tree) package.
 ![rqt_tf_tree of the racecar](assets/rqt_tf_tree.png)
@@ -76,3 +83,5 @@ After that, the lane keeping node can be launched in a separate command line.
 ```
 ros2 run lane_keeping lane_keeping
 ```
+You should see something like this
+<a href="https://youtu.be/5cexXO-47xI"><img width="600" src="./assets/gazebo-youtube.png"></a>  
