@@ -19,9 +19,9 @@ This is a ROS2 project for the [*Robotic Systems Laboratory*](https://oktatas.gp
 The task is to simulate a racecar with Ackermann-steering in gazebo, which drives around a racetrack autonomously. 
 
 ## Prerequisites ##
-- [Ubuntu 24.04 LTS] (https://ubuntu.com/download/desktop)
-- [ROS2 Jazzy] (https://docs.ros.org/en/jazzy/Installation.html)
-- [Gazebo Harmonic] (https://gazebosim.org/docs/harmonic/ros_installation/)
+- [Ubuntu 24.04 LTS](https://ubuntu.com/download/desktop)
+- [ROS2 Jazzy](https://docs.ros.org/en/jazzy/Installation.html)
+- [Gazebo Harmonic](https://gazebosim.org/docs/harmonic/ros_installation/)
 - ROS2 Packages
   - URDF Packages
       - urdf_package
