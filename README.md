@@ -13,7 +13,7 @@
   - [Launch](#launch)
 
 ## Project Descripton ##
-This is a ROS2 project for the [*Robotic Systems Laboratory*](https://oktatas.gpk.bme.hu/tad/tantargy/BMEGEMINMRL) course of the Mechatronics Engineering MSc of the Budapest University of Technology and Economics created by [Máté Horváth](https://github.com/horvmate02) and [Barnabás Szabó](https://github.com/barnus877]).
+This is a ROS2 project for the [*Robotic Systems Laboratory*](https://oktatas.gpk.bme.hu/tad/en/tantargy/BMEGEMINMRL) course of the Mechatronics Engineering MSc of the Budapest University of Technology and Economics created by [Máté Horváth](https://github.com/horvmate02) and [Barnabás Szabó](https://github.com/barnus877]).
 
 The task is to simulate a racecar with Ackermann-steering in gazebo, which drives around a racetrack autonomously. 
 
